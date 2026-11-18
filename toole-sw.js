@@ -16,3 +16,17 @@ self.addEventListener('fetch',function(e){var r=e.request;if(r.method!=='GET'||r
   if(p.indexOf('/rest/v1/')===0&&u.search.indexOf('created_at=gt.')<0)e.respondWith(netFirst(e,r));
   else if(p.indexOf('/storage/v1/object/')===0)e.respondWith(cacheFirst(r))}
  else if(u.hostname==='res.cloudinary.com'&&u.pathname.indexOf('/image/upload/')>-1)e.respondWith(cacheFirst(r))});
+
+/* ===== Notifications web (push) ===== */
+self.addEventListener('push',function(e){
+ var p={};try{p=e.data?e.data.json():{}}catch(x){try{p={data:{body:e.data.text()}}}catch(y){}}
+ var n=p.notification||{},d=p.data||{};
+ var title=n.title||d.title||d.gname||'T\u00D5\u00D5L\u00E9',body=n.body||d.body||'\uD83D\uDD12 Nouveau message';
+ var info={type:d.type,peer:d.peer,group:d.group,gname:d.gname,title:title};
+ e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(l){
+  if(l.some(function(c){return c.focused}))return;
+  return self.registration.showNotification(title,{body:body,icon:'logo.png',badge:'favicon.png',tag:d.peer||d.group||'toole',renotify:true,data:info})}))});
+self.addEventListener('notificationclick',function(e){e.notification.close();var d=e.notification.data||{};
+ e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(l){
+  if(l.length){var c=l[0];try{c.postMessage({toole:'open',d:d})}catch(x){}return c.focus()}
+  return self.clients.openWindow(self.registration.scope+'?np='+encodeURIComponent(JSON.stringify(d)))}))});
