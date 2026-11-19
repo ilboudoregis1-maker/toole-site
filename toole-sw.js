@@ -25,7 +25,7 @@ self.addEventListener('push',function(e){
  var info={type:d.type,peer:d.peer,group:d.group,gname:d.gname,title:title};
  e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(l){
   if(l.some(function(c){return c.focused}))return;
-  return self.registration.showNotification(title,{body:body,icon:'logo.png',badge:'favicon.png',tag:d.peer||d.group||'toole',renotify:true,data:info})}))});
+  return self.registration.showNotification(title,{body:body,icon:'logo.png',badge:'badge-toole.png',tag:d.peer||d.group||'toole',renotify:true,data:info})}))});
 self.addEventListener('notificationclick',function(e){e.notification.close();var d=e.notification.data||{};
  e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(l){
   if(l.length){var c=l[0];try{c.postMessage({toole:'open',d:d})}catch(x){}return c.focus()}
