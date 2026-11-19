@@ -101,7 +101,7 @@
     /* À propos */
     var ab = document.createElement('div');
     ab.appendChild(row(L('Version', 'Version'), VERSION));
-    ab.appendChild(row(L('Site TÕÕLé', 'TÕÕLé website'), '›', function () { try { window.open('https://ilboudoregis1-maker.github.io/CNS.corp/', '_system'); } catch (e) { } }));
+    ab.appendChild(row(L('Site TÕÕLé', 'TÕÕLé website'), '›', function () { try { window.open('https://ilboudoregis1-maker.github.io/toole-officiel/', '_system'); } catch (e) { } }));
     var v = document.createElement('div'); v.className = 'pro-ver'; v.textContent = 'TÕÕLé · Burkina Faso';
     body.appendChild(group(L('À propos', 'About'), ab)); body.appendChild(v);
     if (window.TOOLE_setLang) { /* traduit les nouveaux blocs si besoin */ }
